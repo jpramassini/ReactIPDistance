@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 import Axios from 'axios';
 import API_KEY from '../App'
 
-const GEOLOCATE_URL = 'api.graphloc.com/graphql?query={getLocation(ip: "NEED IP HERE"){location{latitudelongitude}}}'
+const GEOLOCATE_URL = 'api.graphloc.com/graphql?query={getLocation(ip: "129.21.140.244"){location{latitude longitude}}}'
+let lat = null;
+let lon = null;
 
 //const GOOGLE_MAPS_URL
 
@@ -17,8 +19,12 @@ export default class inputBar extends Component {
   }
 
   queryForAddress(){
-    const query = `api.graphloc.com/graphql?query={getLocation(ip:"${this.state.term}"){location{latitude longitude}}}`;
-    Axios.get(query).then(response => console.log(response));
+    const query = `https://api.graphloc.com/graphql?query={getLocation(ip: \"${this.state.term}\"){location{latitude longitude}}}`;
+    Axios.get(query).then(response =>{
+      console.log(response);
+      lat = response.data.data.getLocation.location.latitude;
+      lon = response.data.data.getLocation.location.longitude;
+    });
     }
 
   onInputChange(event){
@@ -33,12 +39,12 @@ export default class inputBar extends Component {
 
       //TODO Add google response here
       this.props.setOrigin(
-        Axios.get
+        //Axios.get
       );
     }
     else if (this.props.type === "destination"){
-      const result = this.queryForAddress(this.state.term);
-      console.log(result);
+      this.queryForAddress();
+      console.log("Queried for address successfully.")
       //this.props.setDest(this.state.term);
     }
     //this.props.setScreen;

@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import InputBar from './components/InputBar'
+import InputBar from './components/InputBar';
+import Axios from 'axios';
 
 
 export const API_KEY = 'AIzaSyDNE83Q7uTVKjb7TjRELdbhLqbOfnJwG5k';
+const GOOGLE_MAPS_URL =
+`https://maps.googleapis.com/maps/api/directions/json?origin=${this.state.origin}&destination=${this.state.destination}&key=${API_KEY}`
 let distanceString = '';
 
 class App extends Component {
